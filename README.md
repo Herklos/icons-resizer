@@ -70,11 +70,23 @@ Specify custom target resolutions:
 python main.py --resolutions 1024 512 256
 ```
 
+Use a different mode:
+
+```bash
+python main.py --mode favicon
+```
+
+Available modes:
+- `default`: Outputs 1024x1024, 512x512, and 100x100 (default mode)
+- `favicon`: Outputs 48x48, 32x32, and 16x16
+
 Combine all options:
 
 ```bash
-python main.py --dir /path/to/icons --out-dir /path/to/output --resolutions 1024 512 256
+python main.py --dir /path/to/icons --out-dir /path/to/output --mode favicon
 ```
+
+Note: The `--resolutions` option overrides the mode's default resolutions if specified.
 
 ### Output
 
@@ -174,9 +186,23 @@ python main.py
 # Output: Skipping banner.png: Image is not square (1920x1080)
 ```
 
+**Favicon mode example:**
+
+To generate favicon-sized icons:
+
+```bash
+python main.py --mode favicon
+```
+
+For a file `favicon.png` at 512x512, this will create in the `out` directory:
+
+- `out/favicon_48.png` (48x48)
+- `out/favicon_32.png` (32x32)
+- `out/favicon_16.png` (16x16)
+
 **Custom resolutions example:**
 
-To generate icons with custom resolutions:
+To generate icons with custom resolutions (overrides mode defaults):
 
 ```bash
 python main.py --resolutions 1024 512 256 128 64

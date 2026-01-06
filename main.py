@@ -3,7 +3,13 @@ import argparse
 import logging
 from PIL import Image
 
-DEFAULT_RESOLUTIONS = [1024, 512, 100]
+# Mode definitions: each mode specifies default resolutions
+MODES = {
+    'default': [1024, 512, 100],
+    'favicon': [48, 32, 16]
+}
+
+DEFAULT_MODE = 'default'
 DEFAULT_DIRECTORY = '.'
 DEFAULT_OUTPUT_DIR = 'out'
 IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff', '.tif', '.ico'}
@@ -145,11 +151,18 @@ def main():
         help='Directory to save resized images (default: out)'
     )
     parser.add_argument(
+        '--mode',
+        type=str,
+        choices=list(MODES.keys()),
+        default=DEFAULT_MODE,
+        help=f'Processing mode (default: {DEFAULT_MODE}). Available modes: {", ".join(MODES.keys())}'
+    )
+    parser.add_argument(
         '--resolutions',
         type=int,
         nargs='+',
-        default=DEFAULT_RESOLUTIONS,
-        help='List of resolutions to convert to (default: 1024 512 100)'
+        default=None,
+        help='List of resolutions to convert to (overrides mode defaults)'
     )
     
     args = parser.parse_args()
@@ -157,8 +170,14 @@ def main():
     log_level = getattr(args, 'log_level', 'INFO')
     logging.getLogger().setLevel(getattr(logging, log_level))
     
-    process_images(args.dir, args.resolutions, args.out_dir)
+    # Determine which resolutions to use
+    # If --resolutions is specified, use it; otherwise use the mode's default resolutions
+    if args.resolutions is not None:
+        resolutions = args.resolutions
+    else:
+        resolutions = MODES[args.mode]
+    
+    process_images(args.dir, resolutions, args.out_dir)
 
 if __name__ == "__main__":
     main()
-
