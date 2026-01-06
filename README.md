@@ -204,3 +204,4 @@ For a file `app_icon.png` at 2048x2048, this will create in the `out` directory:
 - Generated files (with numeric suffix like `_512.png`, `_100.png`) are automatically skipped
 - If a resized file already exists, it will be skipped (not overwritten)
 - The tool supports multiple image formats (PNG, JPG, JPEG, GIF, BMP, WEBP, TIFF, ICO) and converts them to PNG for processing
+- Background can be removed with <https://www.adobe.com/express/feature/image/remove-background>
